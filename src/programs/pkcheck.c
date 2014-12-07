@@ -372,7 +372,6 @@ main (int argc, char *argv[])
       else if (g_strcmp0 (argv[n], "--process") == 0 || g_strcmp0 (argv[n], "-p") == 0)
         {
           gint pid;
-	  guint uid;
           guint64 pid_start_time;
 
           n++;
@@ -382,11 +381,7 @@ main (int argc, char *argv[])
               goto out;
             }
 
-          if (sscanf (argv[n], "%i,%" G_GUINT64_FORMAT ",%u", &pid, &pid_start_time, &uid) == 3)
-            {
-              subject = polkit_unix_process_new_for_owner (pid, pid_start_time, uid);
-            }
-          else if (sscanf (argv[n], "%i,%" G_GUINT64_FORMAT, &pid, &pid_start_time) == 2)
+          if (sscanf (argv[n], "%i,%" G_GUINT64_FORMAT, &pid, &pid_start_time) == 2)
             {
               subject = polkit_unix_process_new_full (pid, pid_start_time);
             }

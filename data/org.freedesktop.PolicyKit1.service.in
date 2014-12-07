@@ -2,4 +2,3 @@
 Name=org.freedesktop.PolicyKit1
 Exec=@libexecdir@/polkitd --no-debug
 User=root
-SystemdService=polkitd.service

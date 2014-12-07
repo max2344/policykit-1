@@ -435,7 +435,6 @@ child_watch_func (GPid     pid,
                   gpointer user_data)
 {
   PolkitAgentSession *session = POLKIT_AGENT_SESSION (user_data);
-  GMainContext *context = g_main_context_default();
 
   if (G_UNLIKELY (_show_debug ()))
     {
@@ -447,11 +446,6 @@ child_watch_func (GPid     pid,
 
   /* kill all the watches we have set up, except for the child since it has exited already */
   session->child_pid = 0;
-  /* Allow the stdout of the child to be processed if we haven't finished yet */
-  while (g_main_context_pending(context))
-    {
-      g_main_context_iteration(context, FALSE);
-    }
   complete_session (session, FALSE);
 }
 
@@ -656,14 +650,14 @@ polkit_agent_session_initiate (PolkitAgentSession *session)
   if (G_UNLIKELY (_show_debug ()))
     g_print ("PolkitAgentSession: spawned helper with pid %d\n", (gint) session->child_pid);
 
+  session->child_watch_source = g_child_watch_source_new (session->child_pid);
+  g_source_set_callback (session->child_watch_source, (GSourceFunc) child_watch_func, session, NULL);
+  g_source_attach (session->child_watch_source, g_main_context_get_thread_default ());
+
   session->child_stdout_channel = g_io_channel_unix_new (session->child_stdout);
   session->child_stdout_watch_source = g_io_create_watch (session->child_stdout_channel, G_IO_IN);
   g_source_set_callback (session->child_stdout_watch_source, (GSourceFunc) io_watch_have_data, session, NULL);
   g_source_attach (session->child_stdout_watch_source, g_main_context_get_thread_default ());
-
-  session->child_watch_source = g_child_watch_source_new (session->child_pid);
-  g_source_set_callback (session->child_watch_source, (GSourceFunc) child_watch_func, session, NULL);
-  g_source_attach (session->child_watch_source, g_main_context_get_thread_default ());
 
 
   session->success = FALSE;
