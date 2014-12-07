@@ -9,8 +9,11 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 DPKG_GENSYMBOLS_CHECK_LEVEL=4
 export DPKG_GENSYMBOLS_CHECK_LEVEL
 
-
+ifeq (linux,$(DEB_HOST_ARCH_OS))
+  SYSTEMD_CONFIG_FLAG = --enable-systemd
+else
   SYSTEMD_CONFIG_FLAG = --disable-systemd
+endif
 
 override_dh_auto_configure:
 	dh_auto_configure -- \

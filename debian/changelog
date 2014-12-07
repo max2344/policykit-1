@@ -1,8 +1,10 @@
-policykit-1 (1:0.105-7) unstable; urgency=medium
+policykit-1 (0.105-8) unstable; urgency=medium
 
-  * Custom rebuild with systemd support/dependency disabled
+  * Rebuild against libsystemd0. This drops the last remaining dependency to
+    libsystemd-login0. (Closes: #771281)
+  * Bump Standards-Version to 3.9.6 (no changes necessary).
 
- -- dzz <dzz@sid>  Fri, 14 Nov 2014 02:48:47 +0000
+ -- Martin Pitt <mpitt@debian.org>  Fri, 28 Nov 2014 10:07:46 +0100
 
 policykit-1 (0.105-7) unstable; urgency=medium
 
