@@ -3,7 +3,7 @@
 03_complete_session.patch
 04_get_cwd.patch
 05_revert-admin-identities-unix-group-wheel.patch
-06_systemd-service.patch
+#06_systemd-service.patch
 07_set-XAUTHORITY-environment-variable-if-unset.patch
 08_deprecate_racy_APIs.patch
 cve-2013-4288.patch

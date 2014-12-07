@@ -1,8 +1,7 @@
 Source: policykit-1
 Section: admin
 Priority: optional
-Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
-Uploaders: Michael Biebl <biebl@debian.org>, Martin Pitt <mpitt@debian.org>
+Maintainer: Dimitri Puzin <max@psycast.de>
 Build-Depends: debhelper (>= 9),
  dh-autoreconf,
  pkg-config,
@@ -16,16 +15,13 @@ Build-Depends: debhelper (>= 9),
  gobject-introspection (>= 0.9.12-4~),
  gir1.2-glib-2.0,
  libglib2.0-doc,
- libgtk-3-doc,
- libsystemd-login-dev [linux-any]
+ libgtk-3-doc
 Standards-Version: 3.9.6
-Vcs-Git: git://anonscm.debian.org/pkg-utopia/policykit.git
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-utopia/policykit.git;a=summary
 Homepage: http://www.freedesktop.org/wiki/Software/polkit/
 
 Package: policykit-1
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libpam-systemd [linux-any], consolekit [!linux-any], dbus
+Depends: ${shlibs:Depends}, ${misc:Depends}, consolekit [!linux-any], dbus
 Multi-Arch: foreign
 Breaks: gdm3 (<< 3.8.4-7~)
 Description: framework for managing administrative policies and privileges
